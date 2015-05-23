@@ -1,4 +1,4 @@
-package com.example.think.opengl.Mesh;
+package com.example.think.opengl.mesh;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
 import com.example.think.opengl.R;
+import com.example.think.opengl.tool.BufferTools;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -40,9 +41,9 @@ public class Background {
 
     public Background(Context context) {
         background = BitmapFactory.decodeResource(context.getResources(), R.mipmap.sand);
-        vertexBuffer = getFloatBuffer(vertices);
-        indexBuffer = getShortBuffer(indices);
-        textureBuffer = getFloatBuffer(textures);
+        vertexBuffer = BufferTools.getFloatBuffer(vertices);
+        indexBuffer = BufferTools.getShortBuffer(indices);
+        textureBuffer = BufferTools.getFloatBuffer(textures);
     }
 
     public void draw(GL10 gl){
@@ -84,27 +85,6 @@ public class Background {
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    private FloatBuffer getFloatBuffer(float[] arr){
-        FloatBuffer mBuffer;
-        ByteBuffer qbb = ByteBuffer.allocateDirect(arr.length * 4);
-        qbb.order(ByteOrder.nativeOrder());
-        mBuffer = qbb.asFloatBuffer();
-        mBuffer.put(arr);
-        mBuffer.position(0);
-        return mBuffer;
-    }
-
-    private ShortBuffer getShortBuffer(short[] arr){
-        ShortBuffer sb;
-        ByteBuffer ibb
-                = ByteBuffer.allocateDirect(arr.length * 2);
-        ibb.order(ByteOrder.nativeOrder());
-        sb = ibb.asShortBuffer();
-        sb.put(arr);
-        sb.position(0);
-        return sb;
     }
 
 }

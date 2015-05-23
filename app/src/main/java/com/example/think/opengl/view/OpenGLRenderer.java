@@ -4,8 +4,8 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 
-import com.example.think.opengl.Mesh.Background;
-import com.example.think.opengl.Mesh.Circle;
+import com.example.think.opengl.mesh.Background;
+import com.example.think.opengl.mesh.Circle;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -57,8 +57,6 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
         gl.glTranslatef(0, 0, -2);//想Z轴负向平移
         gl.glScalef(0.2f,0.2f,0.2f);
         circle.draw(gl);
-
-
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
