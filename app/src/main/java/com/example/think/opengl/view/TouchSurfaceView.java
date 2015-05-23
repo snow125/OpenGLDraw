@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Think on 2015/5/23.
@@ -20,7 +22,8 @@ public class TouchSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     private Paint p;
     private SurfaceHolder sfh;
     private Canvas canvas;
-    private float radius = 100;
+    private float radius = 1;
+    private List<PointGroup> pointGroups = new ArrayList<>();
 
     public TouchSurfaceView(Context context) {
         this(context, null, 0);
@@ -41,7 +44,13 @@ public class TouchSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     public boolean onTouchEvent(MotionEvent event) {
         x = event.getX();
         y = event.getY();
-        doDraw();
+        int action = event.getAction();
+        switch (action){
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                pointGroups.add(new PointGroup(x, y));
+                doDraw();
+        }
         return true;
     }
 
@@ -50,9 +59,15 @@ public class TouchSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         sfh.unlockCanvasAndPost(canvas);
 
         canvas = sfh.lockCanvas();
-        //p.setColor(Color.BLUE);
-        p.setARGB(100, 100, 100, 100);
-        canvas.drawCircle(x, y, radius, p);
+        canvas.drawColor(Color.argb(255, 0xFE, 0xEA, 0xA2));
+        p.setColor(Color.argb(204, 0xF6, 0xC0, 0x38));
+        for (int i=0; i< pointGroups.size(); i++){
+            List<Point> points = pointGroups.get(i).getPoints();
+            for (int j=0; j<points.size(); j++){
+                Point point = points.get(j);
+                canvas.drawCircle(point.getX(), point.getY(), radius, p);
+            }
+        }
         sfh.unlockCanvasAndPost(canvas);
 
         canvas = sfh.lockCanvas(new Rect(0, 0, 0, 0));
@@ -61,6 +76,9 @@ public class TouchSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+//        canvas = sfh.lockCanvas();
+//        canvas.drawColor(Color.YELLOW);
+//        sfh.unlockCanvasAndPost(canvas);
         doDraw();
     }
 
