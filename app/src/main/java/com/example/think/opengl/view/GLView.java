@@ -43,19 +43,19 @@ public class GLView extends GLSurfaceView implements SurfaceHolder.Callback{
     public boolean onTouchEvent(MotionEvent event) {
         x = event.getX();
         y = event.getY();
-        draw();
+//        draw();
         return true;
     }
 
-    private void draw(){
-        Canvas canvas = sfh.lockCanvas();
-        if(canvas == null){
-            Log.e("123", "canvas");
-        }
-        p.setColor(Color.BLUE);
-        canvas.drawCircle(x, y, 10, p);
-        Log.e("123", "okokokoko");
-        sfh.unlockCanvasAndPost(canvas);
-    }
+//    private void draw(){
+//        Canvas canvas = sfh.lockCanvas();
+//        if(canvas == null){
+//            Log.e("123", "canvas");
+//        }
+//        p.setColor(Color.BLUE);
+//        canvas.drawCircle(x, y, 10, p);
+//        Log.e("123", "okokokoko");
+//        sfh.unlockCanvasAndPost(canvas);
+//    }
 
 }
